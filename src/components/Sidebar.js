@@ -1,16 +1,42 @@
-import React from 'react'
-import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom'
-import { useProductsContext } from '../context/products_context'
-import { FaTimes } from 'react-icons/fa'
-import { links } from '../utils/constants'
-import styled from 'styled-components'
-import CartButtons from './CartButtons'
-import { useUserContext } from '../context/user_context'
+import React from 'react';
+import logo from '../assets/logo.svg';
+import { Link } from 'react-router-dom';
+import { useProductsContext } from '../context/products_context';
+import { FaTimes } from 'react-icons/fa';
+import { links } from '../utils/constants';
+import styled from 'styled-components';
+import CartButtons from './CartButtons';
+import { useUserContext } from '../context/user_context';
 
 const Sidebar = () => {
-  return <h4>sidebar</h4>
-}
+  const isOpen = true;
+  return (
+    <SidebarContainer>
+      <aside className={`${isOpen ? 'sidebar show-sidebar' : 'sidebar'}`}>
+        <div className='sidebar-header'>
+          <img src={logo} alt='logo' className='logo' />
+          <button className='close-btn' type='btn'>
+            <FaTimes />
+          </button>
+        </div>
+        <ul className='links'>
+          {links.map((link) => {
+            const { text, id, url } = link;
+            return (
+              <li key={id}>
+                <Link to={url}>{text}</Link>
+              </li>
+            );
+          })}
+          <li>
+            <Link to='/checkout'>checkout</Link>
+          </li>
+        </ul>
+        <CartButtons />
+      </aside>
+    </SidebarContainer>
+  );
+};
 
 const SidebarContainer = styled.div`
   text-align: center;
@@ -45,14 +71,13 @@ const SidebarContainer = styled.div`
     text-align: left;
     font-size: 1rem;
     text-transform: capitalize;
-    padding: 1rem 1.5rem;
+    padding: 1.5rem;
     color: var(--clr-grey-3);
     transition: var(--transition);
     letter-spacing: var(--spacing);
   }
 
   .links a:hover {
-    padding: 1rem 1.5rem;
     padding-left: 2rem;
     background: var(--clr-grey-10);
     color: var(--clr-grey-2);
@@ -81,6 +106,6 @@ const SidebarContainer = styled.div`
       display: none;
     }
   }
-`
+`;
 
-export default Sidebar
+export default Sidebar;
