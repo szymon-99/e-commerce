@@ -1,9 +1,37 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const Contact = () => {
-  return <h4>contact section</h4>
-}
+  return (
+    <Wrapper>
+      <div className='section-center'>
+        <h3>Join our newsletter and get 20% off </h3>
+        <div className='content'>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit,
+            tempora eveniet architecto quae ipsam distinctio maiores autem
+            pariatur repellendus adipisci.
+          </p>
+          <form
+            className='contact-form'
+            action='https://formspree.io/f/moqyjlkp'
+            method='POST'
+          >
+            <input
+              type='email'
+              className='form-input'
+              placeholder='enter email'
+              name='_replyto'
+            />
+            <button type='submit' className='submit-btn'>
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </Wrapper>
+  );
+};
 const Wrapper = styled.section`
   padding: 5rem 0;
   h3 {
@@ -33,10 +61,6 @@ const Wrapper = styled.section`
     border-top-left-radius: var(--radius);
     border-bottom-left-radius: var(--radius);
   }
-  .submit-btn {
-    border-top-right-radius: var(--radius);
-    border-bottom-right-radius: var(--radius);
-  }
   .form-input::placeholder {
     color: var(--clr-black);
     text-transform: capitalize;
@@ -48,6 +72,8 @@ const Wrapper = styled.section`
     cursor: pointer;
     transition: var(--transition);
     color: var(--clr-black);
+    border-top-right-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
   }
   .submit-btn:hover {
     color: var(--clr-white);
@@ -67,6 +93,6 @@ const Wrapper = styled.section`
   @media (min-width: 1280px) {
     padding: 15rem 0;
   }
-`
+`;
 
-export default Contact
+export default Contact;
