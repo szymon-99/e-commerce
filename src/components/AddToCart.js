@@ -1,13 +1,77 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { FaCheck } from 'react-icons/fa'
-import { useCartContext } from '../context/cart_context'
-import AmountButtons from './AmountButtons'
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { FaCheck } from 'react-icons/fa';
+import { useCartContext } from '../context/cart_context';
+import AmountButtons from './AmountButtons';
 
-const AddToCart = () => {
-  return <h4>addToCart </h4>
-}
+const AddToCart = ({ id, stock, colors }) => {
+  const [mainColor, setMainColor] = useState(colors[0]);
+  const [amount, setAmount] = useState(1);
+  const [alert, setAlert] = useState(false);
+
+  const increaseAmount = () => {
+    setAmount((oldAmount) => {
+      let tempAmount = oldAmount + 1;
+      if (tempAmount > stock) {
+        tempAmount = stock;
+        setAlert(true);
+      }
+      return tempAmount;
+    });
+  };
+  const decreaseAmount = () => {
+    setAmount((oldAmount) => {
+      let tempAmount = oldAmount - 1;
+      if (tempAmount < 1) tempAmount = 1;
+      setAlert(false);
+      return tempAmount;
+    });
+  };
+
+  //this is optional
+  useEffect(() => {
+    const alertTimeout = setTimeout(() => {
+      setAlert(false);
+    }, 2000);
+    return () => clearTimeout(alertTimeout);
+  }, [alert]);
+
+  return (
+    <Wrapper>
+      <div className='colors'>
+        <span>Colors : </span>
+        <div>
+          {colors.map((color, index) => {
+            return (
+              <button
+                key={index}
+                className={
+                  mainColor === color ? 'color-btn active' : 'color-btn'
+                }
+                style={{ background: color }}
+                onClick={() => setMainColor(color)}
+              >
+                {mainColor === color ? <FaCheck /> : null}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      <div className='btn-container'>
+        <AmountButtons
+          amount={amount}
+          decrease={decreaseAmount}
+          increase={increaseAmount}
+          alert={alert}
+        />
+        <Link to='/cart' className='btn'>
+          Add to cart
+        </Link>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   margin-top: 2rem;
@@ -53,5 +117,5 @@ const Wrapper = styled.section`
     margin-top: 1rem;
     width: 140px;
   }
-`
-export default AddToCart
+`;
+export default AddToCart;
