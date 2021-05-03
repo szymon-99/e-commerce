@@ -24,7 +24,7 @@ const Sort = () => {
         </button>
         <button
           type='button'
-          className={!grid_view && 'active'}
+          className={!grid_view ? 'active' : null}
           onClick={setListView}
         >
           <BsList />
@@ -39,11 +39,11 @@ const Sort = () => {
           id='sort'
           className='sort-input'
           value={sort}
-          onChange={(e) => updateSort(e)}
+          onChange={updateSort}
         >
           <option value='price-lowest'>price (lowest)</option>
           <option value='price-highest'>price (highest)</option>
-          <option value='name-a'>name (a-z</option>
+          <option value='name-a'>name (a-z)</option>
           <option value='name-z'>name (z-a)</option>
         </select>
       </form>

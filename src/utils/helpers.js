@@ -1,3 +1,5 @@
+import { GiPerpendicularRings } from 'react-icons/gi';
+
 export const formatPrice = (number) => {
   return new Intl.NumberFormat('en-Us', {
     style: 'currency',
