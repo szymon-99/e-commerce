@@ -42,9 +42,9 @@ const Wrapper = styled.section`
     max-width: 45em;
     color: var(--clr-grey-5);
   }
+
   .contact-form {
-    width: 100%;
-    max-width: 500px;
+    max-width: 90vw;
     display: grid;
     grid-template-columns: 1fr auto;
   }
@@ -56,6 +56,7 @@ const Wrapper = styled.section`
     border: 2px solid var(--clr-black);
   }
   .form-input {
+    width: 100%;
     border-right: none;
     color: var(--clr-grey-3);
     border-top-left-radius: var(--radius);
