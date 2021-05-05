@@ -13,14 +13,17 @@ ReactDOM.render(
     domain={`${process.env.REACT_APP_DOMAIN_ID}`}
     clientId={`${process.env.REACT_APP_AUTH_KEY}`}
     redirectUri={window.location.origin}
+    cacheLocation='localstorage'
   >
-    <ProductsProvider>
-      <FilterProvider>
-        <CartProvider>
-          <App />
-        </CartProvider>
-      </FilterProvider>
-    </ProductsProvider>
+    <UserProvider>
+      <ProductsProvider>
+        <FilterProvider>
+          <CartProvider>
+            <App />
+          </CartProvider>
+        </FilterProvider>
+      </ProductsProvider>
+    </UserProvider>
   </Auth0Provider>,
   document.getElementById('root')
 );
