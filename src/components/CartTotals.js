@@ -55,6 +55,14 @@ const Wrapper = styled.section`
   @media (min-width: 776px) {
     justify-content: flex-end;
   }
+  @media (max-width: 450px) {
+    article {
+      padding: 1.5rem;
+    }
+    div {
+      width: 100%;
+    }
+  }
   .btn {
     width: 100%;
     margin-top: 1rem;
