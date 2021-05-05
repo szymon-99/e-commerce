@@ -1,14 +1,37 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useCartContext } from '../context/cart_context'
-import { Link } from 'react-router-dom'
-import CartColumns from './CartColumns'
-import CartItem from './CartItem'
-import CartTotals from './CartTotals'
+import React from 'react';
+import styled from 'styled-components';
+import { useCartContext } from '../context/cart_context';
+import { Link } from 'react-router-dom';
+import CartColumns from './CartColumns';
+import CartItem from './CartItem';
+import CartTotals from './CartTotals';
 
 const CartContent = () => {
-  return <h4>cart content </h4>
-}
+  const { cart, clearCart } = useCartContext();
+
+  return (
+    <Wrapper className='section section-center'>
+      <CartColumns />
+      {cart.map((item) => {
+        return <CartItem key={item.id} {...item} />;
+      })}
+      <hr />
+      <div className='link-container'>
+        <Link to='/products' className='link-btn'>
+          Continue shopping
+        </Link>
+        <button
+          type='button'
+          className='link-btn clear-btn'
+          onClick={clearCart}
+        >
+          Clear shopping cart
+        </button>
+      </div>
+      <CartTotals />
+    </Wrapper>
+  );
+};
 const Wrapper = styled.section`
   .link-container {
     display: flex;
@@ -27,8 +50,15 @@ const Wrapper = styled.section`
     font-weight: 400;
     cursor: pointer;
   }
+  @media (max-width: 450px) {
+    .link-btn {
+      font-size: 0.7rem;
+      width: 40%;
+      text-align: center;
+    }
+  }
   .clear-btn {
     background: var(--clr-black);
   }
-`
-export default CartContent
+`;
+export default CartContent;
