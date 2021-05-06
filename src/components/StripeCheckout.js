@@ -35,9 +35,11 @@ const CheckoutForm = () => {
         color: '#32325d',
         fontFamily: 'Arial, sans-serif',
         fontSmoothing: 'antialiased',
-        fontSize: '16px',
+        fontSize: '14px',
+
         '::placeholder': {
           color: '#32325d',
+          fontSize: '14px',
         },
       },
       invalid: {
@@ -49,11 +51,15 @@ const CheckoutForm = () => {
 
   const createPaymentIntent = async () => {
     try {
-      const data = await axios.post(
+      const { data } = await axios.post(
         '/.netlify/functions/create-payment-intent',
         JSON.stringify({ cart, shipping_fee, total_amount })
       );
-    } catch (error) {}
+
+      setClientSecret(data.clientSecret);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   useEffect(() => {
@@ -61,11 +67,50 @@ const CheckoutForm = () => {
     //eslint-disable-next-line
   }, []);
 
-  const handleChange = async (event) => {};
-  const handleSubmit = async (ev) => {};
+  const handleChange = async (event) => {
+    console.log(event);
+    setDisabled(event.empty);
+    setError(event.error ? event.error.message : '');
+  };
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
+    setProcessing(true);
+
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+      },
+    });
+    if (payload.error) {
+      setError(`payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      setError(null);
+      setProcessing(false);
+      setSucceeded(true);
+      setTimeout(() => {
+        clearCart();
+        history.push('/');
+      }, 10000);
+    }
+  };
 
   return (
     <div>
+      {succeeded ? (
+        <article>
+          <h4>Thank you</h4>
+          <h4>Your payment was succesfull!</h4>
+          <h4>Redirecting to home page</h4>
+        </article>
+      ) : (
+        <article>
+          <h4>Hello, {myUser?.name}</h4>
+          <p>your total is {formatPrice(shipping_fee + total_amount)}</p>
+          <p>Test Card number : 4242 4242 4242 4242</p>
+          <p>other parameters are whatever</p>
+        </article>
+      )}
       <form id='payment-form' onSubmit={handleSubmit}>
         <CardElement
           id='card-element'
@@ -74,7 +119,11 @@ const CheckoutForm = () => {
         />
         <button disabled={processing || disabled || succeeded} id='submit'>
           <span id='button-text'>
-            {processing ? <div className='spinner' id='spinner'></div> : 'Pay'}
+            {processing ? (
+              <div className='spinner' id='spinner'></div>
+            ) : (
+              'Pay now'
+            )}
           </span>
         </button>
         {/* if error */}
@@ -110,13 +159,14 @@ const StripeCheckout = () => {
 
 const Wrapper = styled.section`
   form {
-    width: 30vw;
+    width: 600px;
     align-self: center;
     box-shadow: 0px 0px 0px 0.5px rgba(50, 50, 93, 0.1),
       0px 2px 5px 0px rgba(50, 50, 93, 0.1),
       0px 1px 1.5px 0px rgba(0, 0, 0, 0.07);
     border-radius: 7px;
     padding: 40px;
+    font-size: 16px;
   }
   input {
     border-radius: 6px;
@@ -241,9 +291,25 @@ const Wrapper = styled.section`
       transform: rotate(360deg);
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 1100px) {
+    form {
+      width: 50vw;
+    }
+  }
+
+  @media only screen and (max-width: 700px) {
     form {
       width: 80vw;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    form {
+      width: 100vw;
+      padding: 1rem;
+    }
+    h4,
+    p {
+      margin-left: 2rem;
     }
   }
 `;
