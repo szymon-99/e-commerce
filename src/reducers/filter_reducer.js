@@ -103,6 +103,7 @@ const filter_reducer = (state, action) => {
     }
     case CLEAR_FILTERS:
       return { ...state, filters: { ...state.initial_filters } };
+    //no default
   }
   throw new Error(`No Matching "${action.type}" - action type`);
 };
