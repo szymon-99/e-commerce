@@ -2,6 +2,6 @@
 
 You can visit his site for more
 
-[https://www.johnsmilga.com/](The best udeym instructor ever)
+[The best udeym instructor ever](https://www.johnsmilga.com/)
 
-[https://react-e-commerce-es.netlify.app/][live demo of the project]
+[live demo of the project](https://react-e-commerce-es.netlify.app/)
