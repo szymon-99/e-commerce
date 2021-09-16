@@ -1,22 +1,7 @@
-## Notes
+### This project comes from John's Smilga course
 
-#### Older React Version
+You can visit his site for more
 
-```
-"react": "^16.13.1",
-"react-dom": "^16.13.1",
-"react-scripts": "3.4.3",
-```
+[https://www.johnsmilga.com/](The best udeym instructor ever)
 
-#### Current React Version
-
-```
-"react": "^17.0.1",
-"react-dom": "^17.0.1",
-"react-scripts": "4.0.0",
-```
-
-#### Alternative fix
-
-.env file in the root
-FAST_REFRESH=FALSE
+[https://react-e-commerce-es.netlify.app/][live demo of the project]
